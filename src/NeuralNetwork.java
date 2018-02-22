@@ -12,14 +12,16 @@ public class NeuralNetwork {
   private double learning_rate=0.1;
 
   public NeuralNetwork(int i, int h, int o) {
-      weights_itoh = new Matrix(h,i);
-      weights_htoo = new Matrix(o,h);
-      bias_hidden = new Matrix(h,1);
-      bias_output = new Matrix(o,1);
-      bias_hidden.randomize();
-      bias_output.randomize();
-      weights_itoh.randomize();
-      weights_htoo.randomize();
+
+    //Inıtialize weight and bias matrices randomly
+    weights_itoh = new Matrix(h,i);
+    weights_htoo = new Matrix(o,h);
+    bias_hidden = new Matrix(h,1);
+    bias_output = new Matrix(o,1);
+    bias_hidden.randomize();
+    bias_output.randomize();
+    weights_itoh.randomize();
+    weights_htoo.randomize();
   }
 
   public void reset() {
@@ -30,20 +32,25 @@ public class NeuralNetwork {
   }
 
   public Matrix feedForward(double[] f) {
+
+    //Necessary computation due to implementation of Matrix class
     Matrix inputs = new Matrix(f).transpose();
 
     Matrix hidden = weights_itoh.multiply(inputs);
     hidden=hidden.add(bias_hidden);
+    //Activation function
     hidden=hidden.map((x)->sigmoid(x));
 
     Matrix output = weights_htoo.multiply(hidden);
     output=output.add(bias_output);
+    //Activation function
     output=output.map((x)->sigmoid(x));
 
     return output;
   }
 
   public void backPropagation(double[] in, double[] target) {
+    //Necessary computation due to implementation of Matrix class
     Matrix inputs = new Matrix(in).transpose();
     Matrix targets = new Matrix(target).transpose();
 
@@ -57,7 +64,6 @@ public class NeuralNetwork {
     outputs=outputs.map((x)->sigmoid(x));
 
     //BackPropagation
-
     Matrix error = targets.subtract(outputs);
 
     //Implementing Gradient Descent on hidden layer
@@ -92,14 +98,4 @@ public class NeuralNetwork {
   private double derivative_sigmoid(double f) {
     return f*(1-f);
   }
-
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(this.weights_itoh);
-    sb.append("\n");
-    sb.append(this.weights_htoo);
-    sb.append("\n");
-    return sb.toString();
-  }
-
 }
