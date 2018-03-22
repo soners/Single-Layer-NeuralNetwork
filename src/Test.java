@@ -20,7 +20,7 @@ public class Test {
     nn.reset();
     Random r = new Random();
     for(int i=0; i<100000; i++) {
-      int r2 = Math.abs(r.nextInt())%(training_data.length-0+1);
+      int r2 = Math.abs(r.nextInt())%(training_data.length);
       nn.backPropagation(training_data[r2],expected_results[r2]);
     }
     Matrix m = nn.feedForward(training_data[0]);

@@ -18,10 +18,7 @@ public class NeuralNetwork {
     weights_htoo = new Matrix(o,h);
     bias_hidden = new Matrix(h,1);
     bias_output = new Matrix(o,1);
-    bias_hidden.randomize();
-    bias_output.randomize();
-    weights_itoh.randomize();
-    weights_htoo.randomize();
+    reset();
   }
 
   public void reset() {

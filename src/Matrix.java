@@ -1,7 +1,11 @@
-public class Matrix implements Mat{
+public class Matrix {
   private double[][] data;
   private int rows;
   private int cols;
+
+  public interface Map {
+    public double map(double d);
+  }
 
   public Matrix(int r, int c) {
     this.data = new double[r][c];
